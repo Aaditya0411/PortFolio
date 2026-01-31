@@ -37,3 +37,10 @@ src/
  ├─ lib/             # Utility functions
  ├─ App.tsx
  └─ main.tsx
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/Aaditya0411/PortFolio.git
+
