@@ -44,3 +44,14 @@ src/
 ```bash
 git clone https://github.com/Aaditya0411/PortFolio.git
 
+2️⃣ Install dependencies
+npm install
+
+3️⃣ Run locally
+npm run dev
+
+🌐 Build for Production
+npm run build
+
+
+
