@@ -37,22 +37,28 @@ src/
  ├─ lib/             # Utility functions
  ├─ App.tsx
  └─ main.tsx
+```
 
 ## 🚀 Getting Started
-
 ### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/Aaditya0411/PortFolio.git
 ```
 
 ### 2️⃣ Install dependencies
-```npm install
+```bash 
+npm install
+```
 
-3️⃣ Run locally
+### 3️⃣ Run locally
+```bash
 npm run dev
+```
 
-🌐 Build for Production
+### 🌐 Build for Production
+```bash
 npm run build
+```
 
 
 
