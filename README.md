@@ -1,4 +1,4 @@
-# 🚀 Personal Portfolio
+# 🚀  Personal Portfolio
 
 A modern, responsive, and interactive personal portfolio showcasing my skills,
 projects, and experience in web development.
