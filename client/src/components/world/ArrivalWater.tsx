@@ -46,9 +46,9 @@ export const ArrivalWater: React.FC = () => {
       {/* 1. Primary undulating reflective water surface */}
       <mesh ref={meshRef} geometry={geom}>
         <meshStandardMaterial
-          color="#0a1a2f"
-          roughness={0.16}
-          metalness={0.42}
+          color="#040a14"
+          roughness={0.62}
+          metalness={0.10}
         />
       </mesh>
 

@@ -8,38 +8,38 @@ export const WorldEnvironment: React.FC = () => {
   return (
     <>
       {/* 1. Natural Nocturnal Estuary Lighting */}
-      {/* Deep twilight ambient sky illumination */}
-      <ambientLight intensity={0.95} color="#15243c" />
+      {/* Soft deep twilight ambient sky illumination */}
+      <ambientLight intensity={0.42} color="#091322" />
 
-      {/* Main Celestial Moonlight: Directly aligned with moon coordinates to cast glistening specular paths across water */}
+      {/* Gentle Nocturnal Moonlight: Angled from high celestial sphere to prevent harsh mirror specular wash */}
       <directionalLight
-        position={[3.6, 6.0, -20]}
-        intensity={4.5}
-        color="#f0f7ff"
+        position={[7.0, 14.0, -12]}
+        intensity={0.55}
+        color="#93c5fd"
         castShadow={false}
       />
 
-      {/* Subtle Front-Fill Moonlight: Illuminates foreground boat contours and textures */}
+      {/* Controlled Cool Rim & Fill Light: Crisp silhouette separation for the fisherman boat */}
       <directionalLight
-        position={[-7, 8, 10]}
-        intensity={1.2}
-        color="#7dd3fc"
+        position={[-5.5, 3.5, 6.0]}
+        intensity={0.45}
+        color="#38bdf8"
         castShadow={false}
       />
 
-      {/* Soft Nautical Twilight Horizon Fog */}
-      <fogExp2 attach="fog" args={['#060c18', 0.013]} />
+      {/* Deep Atmospheric Horizon Fog */}
+      <fogExp2 attach="fog" args={['#030712', 0.016]} />
 
       {/* 2. Living Undulating Water Surface */}
       <ArrivalWater />
 
-      {/* 3. Atmospheric Ground Mist & Distant Megaliths */}
+      {/* 3. Atmospheric Depth, Mist & Celestial Moon */}
       <ArrivalAtmosphere />
 
       {/* 4. The Fisherman Inhabitant on his Skiff with Golden Lantern */}
       <ArrivalFisherman />
 
-      {/* 5. Floating Origin Developer Core Artifact */}
+      {/* 5. Background Celestial Core Focal Element */}
       <ArrivalCore />
     </>
   );

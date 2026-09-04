@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, ArrowDownRight, ExternalLink, Download, Github, Linkedin, Mail, Check, Copy, FileText, ShieldCheck } from 'lucide-react';
+import { 
+  ArrowUpRight, 
+  ArrowDownRight, 
+  ExternalLink, 
+  Download, 
+  Github, 
+  Linkedin, 
+  Mail, 
+  Check, 
+  Copy, 
+  FileText, 
+  GraduationCap, 
+  Briefcase, 
+  Code2 
+} from 'lucide-react';
 import { useWorld, DestinationId } from '@/contexts/WorldStateContext';
 import { GoswamiMonogram } from '@/components/brand/GoswamiMonogram';
 
@@ -131,6 +145,17 @@ const SKILL_GROUPS = [
   { label: 'CORE CONCEPTS', items: ['Data Structures & Algorithms', 'Object-Oriented Design', 'System Design', 'REST APIs', 'CI/CD', 'Unit Testing'] },
 ];
 
+const STACK_FILTER_TABS = [
+  { id: 'ALL', label: 'ALL SYSTEMS' },
+  { id: 'BLOCKCHAIN / WEB3', label: 'BLOCKCHAIN & WEB3' },
+  { id: 'LANGUAGES', label: 'LANGUAGES' },
+  { id: 'FRAMEWORKS', label: 'FRAMEWORKS' },
+  { id: 'LIBRARIES', label: 'LIBRARIES' },
+  { id: 'DATABASES', label: 'DATABASES' },
+  { id: 'TOOLS / CLOUD', label: 'TOOLS & CLOUD' },
+  { id: 'CORE CONCEPTS', label: 'CORE CS' },
+];
+
 export const WorldEditorialLayer: React.FC = () => {
   const {
     activeDestination,
@@ -139,6 +164,8 @@ export const WorldEditorialLayer: React.FC = () => {
     setSelectedProjectId,
   } = useWorld();
 
+  const [activeStackCategory, setActiveStackCategory] = useState<string>('ALL');
+  const [expandedRow, setExpandedRow] = useState<string | null>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const handleCopyEmail = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -236,38 +263,94 @@ export const WorldEditorialLayer: React.FC = () => {
       )}
 
       {/* =========================================================================
-          DESTINATION 03: STACK / INFRASTRUCTURE
+          DESTINATION 03: STACK / INFRASTRUCTURE (TECHNICAL ARCHITECTURAL MAP)
           ========================================================================= */}
       {activeDestination === 'stack' && (
         <section className="editorial-view stack-view" aria-label="Stack Zone">
-          <div className="stack-panel">
-            <div className="stack-header-row">
-              <div>
-                <p className="editorial-kicker">03 / TECHNICAL INFRASTRUCTURE</p>
+          <div className="stack-panel-editorial">
+            <div className="stack-editorial-header">
+              <div className="stack-header-left">
+                <span className="editorial-kicker">03 / TECHNICAL INFRASTRUCTURE</span>
                 <h2 className="editorial-section-title">
                   TOOLS FOR<br />
-                  <span>MAKING SENSE</span>
+                  <span>MAKING SENSE.</span>
                 </h2>
               </div>
-              <p className="stack-subtitle">
-                Core technologies and architectures utilized across production web applications and decentralized ledgers.
+              <p className="stack-editorial-lead">
+                Core technologies, distributed ledgers, and architectural systems utilized across production full-stack applications.
               </p>
             </div>
 
-            <div className="stack-groups-grid">
-              {SKILL_GROUPS.map((group, idx) => (
-                <div key={group.label} className="stack-group-card">
-                  <div className="stack-group-head">
-                    <span className="group-num">0{idx + 1}</span>
-                    <h3>{group.label}</h3>
+            {/* Interactive Domain Filter Toggles */}
+            <div className="stack-filter-bar">
+              <span className="stack-filter-label">FILTER DOMAIN:</span>
+              <div className="stack-filter-pills">
+                {STACK_FILTER_TABS.map((tab) => {
+                  const isActive = activeStackCategory === tab.id;
+                  const isWeb3 = tab.id.includes('BLOCKCHAIN');
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      className={`stack-filter-pill ${isActive ? 'active' : ''} ${isWeb3 ? 'web3-pill' : ''}`}
+                      onClick={() => {
+                        setActiveStackCategory((prev) => prev === tab.id ? 'ALL' : tab.id);
+                      }}
+                      aria-pressed={isActive}
+                    >
+                      <span className="filter-pill-dot" />
+                      <span>{tab.label}</span>
+                      {tab.id === 'ALL' && <span className="filter-count">7</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="stack-ledger-rows">
+              {(activeStackCategory === 'ALL'
+                ? SKILL_GROUPS
+                : SKILL_GROUPS.filter((g) => g.label === activeStackCategory)
+              ).map((group) => {
+                const globalIdx = SKILL_GROUPS.findIndex((g) => g.label === group.label);
+                const isBlockchain = group.label.includes('BLOCKCHAIN');
+                const isExpanded = expandedRow === group.label || activeStackCategory !== 'ALL';
+                return (
+                  <div
+                    key={group.label}
+                    className={`stack-ledger-row ${isBlockchain ? 'stack-featured-row' : ''} ${isExpanded ? 'row-expanded' : ''}`}
+                    onClick={() => setExpandedRow((prev) => prev === group.label ? null : group.label)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        setExpandedRow((prev) => prev === group.label ? null : group.label);
+                      }
+                    }}
+                  >
+                    <div className="stack-ledger-meta">
+                      <div className="stack-meta-top-line">
+                        <span className="stack-ledger-num">0{globalIdx + 1}</span>
+                        <span className="stack-items-count">{group.items.length} SKILLS</span>
+                      </div>
+                      <h3 className="stack-ledger-cat">{group.label}</h3>
+                      {isBlockchain && (
+                        <span className="stack-featured-tag">PRIMARY SPECIALIZATION</span>
+                      )}
+                    </div>
+                    <div className="stack-ledger-skills">
+                      {group.items.map((skill) => (
+                        <span key={skill} className="stack-skill-item">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="stack-toggle-cue" title={isExpanded ? 'Collapse' : 'Expand'}>
+                      <span className="toggle-symbol">{isExpanded ? '−' : '+'}</span>
+                    </div>
                   </div>
-                  <div className="stack-pill-wrap">
-                    {group.items.map((skill) => (
-                      <span key={skill} className="stack-pill">{skill}</span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -411,115 +494,68 @@ export const WorldEditorialLayer: React.FC = () => {
       )}
 
       {/* =========================================================================
-          DESTINATION 06: RESUME / ARCHIVE
+          DESTINATION 06: RESUME / CREDENTIALS (EDITORIAL ARCHIVE)
           ========================================================================= */}
       {activeDestination === 'resume' && (
         <section className="editorial-view resume-view" aria-label="Resume Zone">
-          <div className="resume-panel">
-            <div className="resume-col-left">
-              <div className="zone-kicker-badge">
-                <span className="kicker-dot" />
-                <span>ZONE 06 // VERIFIED RECORD</span>
-              </div>
-              <h2 className="editorial-section-title">
-                CURRICULUM<br />
-                <span>VITAE &amp; CREDENTIALS.</span>
-              </h2>
-              <p className="resume-desc">
-                Direct access to my verified curriculum vitae. Synthesizing full-stack web engineering, permissioned and public blockchain systems, and competitive algorithmic problem solving.
-              </p>
-
-              {/* Fast-Scan Recruiter Dossier Grid */}
-              <div className="resume-highlights-grid">
-                <div className="resume-highlight-item">
-                  <span className="hl-label">EDUCATION</span>
-                  <strong>B.Tech in Computer Science</strong>
-                  <small>2024 — 2028 · Parul University</small>
-                </div>
-                <div className="resume-highlight-item">
-                  <span className="hl-label">INDUSTRY EXP</span>
-                  <strong>Software Engineering Virtual Exp.</strong>
-                  <small>JPMorgan Chase &amp; Co. / Forage</small>
-                </div>
-                <div className="resume-highlight-item">
-                  <span className="hl-label">COMPETITIVE DSA</span>
-                  <strong>200+ Problems Solved</strong>
-                  <small>LeetCode Data Structures &amp; Algorithms</small>
-                </div>
-                <div className="resume-highlight-item">
-                  <span className="hl-label">SYSTEMS ARCHIVE</span>
-                  <strong>24+ Public Repositories</strong>
-                  <small>MERN Stack &amp; Web3 Smart Contracts</small>
-                </div>
-              </div>
+          <div className="resume-editorial-container">
+            <div className="resume-editorial-header">
+              <span className="editorial-kicker">06 // CURRICULUM VITAE</span>
+              <h2 className="editorial-section-title">RESUME</h2>
             </div>
 
-            <div className="resume-col-right">
-              <div className="resume-artifact-card">
-                <div className="card-header-bar">
-                  <div className="card-header-left">
-                    <FileText size={15} />
-                    <span>OFFICIAL CURRICULUM VITAE</span>
+            <div className="resume-document-frame">
+              <div className="doc-preview-surface">
+                <div className="doc-preview-header">
+                  <div className="doc-preview-identity">
+                    <span className="doc-meta-pre">OFFICIAL CURRICULUM VITAE</span>
+                    <h3 className="doc-name-title">ADITYAGIRI GOSWAMI</h3>
+                    <p className="doc-role-subtitle">Full Stack &amp; Blockchain Developer</p>
                   </div>
-                  <span className="card-version-badge">2026 EDITION</span>
-                </div>
-
-                <div className="resume-preview-sheet">
-                  <div className="sheet-top-row">
-                    <div className="sheet-monogram">
-                      <GoswamiMonogram />
-                    </div>
-                    <div className="sheet-title-meta">
-                      <h3>ADITYAGIRI GOSWAMI</h3>
-                      <p>Full Stack &amp; Blockchain Developer</p>
-                      <span>Vadodara, Gujarat, India · goswamiaaditya61@gmail.com</span>
-                    </div>
-                  </div>
-
-                  <div className="sheet-divider" />
-
-                  <div className="sheet-summary-snippet">
-                    <div className="snippet-row">
-                      <span className="snippet-dot" />
-                      <p><b>Core Stack:</b> React, TypeScript, Node.js, Express, MongoDB, Tailwind CSS</p>
-                    </div>
-                    <div className="snippet-row">
-                      <span className="snippet-dot" />
-                      <p><b>Blockchain:</b> Solidity, Ethereum, Hyperledger Fabric, Fabric Gateway SDK, Foundry</p>
-                    </div>
-                    <div className="snippet-row">
-                      <span className="snippet-dot" />
-                      <p><b>Engineering:</b> RESTful APIs, System Architecture, CI/CD, Git Version Control</p>
-                    </div>
-                  </div>
-
-                  <div className="sheet-badge-seal">
-                    <ShieldCheck size={14} />
-                    <span>VERIFIED PDF ARTIFACT · 3 PAGES · ATS COMPLIANT</span>
+                  <div className="doc-monogram-box">
+                    <GoswamiMonogram />
                   </div>
                 </div>
 
-                <div className="card-actions-row">
+                {/* Stylized Architectural Document Blueprint Silhouette */}
+                <div className="doc-silhouette-container" aria-hidden="true">
+                  <div className="doc-silhouette-band">
+                    <div className="doc-silhouette-line w-40 primary" />
+                    <div className="doc-silhouette-line w-85" />
+                    <div className="doc-silhouette-line w-70" />
+                  </div>
+                  <div className="doc-silhouette-band">
+                    <div className="doc-silhouette-line w-30 primary" />
+                    <div className="doc-silhouette-line w-90" />
+                    <div className="doc-silhouette-line w-60" />
+                  </div>
+                  <div className="doc-silhouette-band">
+                    <div className="doc-silhouette-line w-35 primary" />
+                    <div className="doc-silhouette-line w-80" />
+                    <div className="doc-silhouette-line w-50" />
+                  </div>
+                </div>
+
+                {/* Clear, High-Contrast Action Buttons */}
+                <div className="doc-actions-toolbar">
                   <a
                     href="/resume.pdf"
                     target="_blank"
                     rel="noreferrer"
-                    className="resume-view-btn"
+                    className="resume-btn-primary"
                   >
-                    <ExternalLink size={15} /> VIEW FULL PDF
+                    <span>VIEW RESUME</span>
+                    <ExternalLink size={14} />
                   </a>
                   <a
                     href="/resume.pdf"
                     download="Adityagiri-Goswami-Resume.pdf"
-                    className="resume-dl-btn"
+                    className="resume-btn-secondary"
                   >
-                    <Download size={15} /> DOWNLOAD CV
+                    <span>DOWNLOAD CV</span>
+                    <Download size={14} />
                   </a>
                 </div>
-
-                <p className="card-note">
-                  Direct verified PDF artifact file. Built with standard ATS-friendly formatting for technical recruiters.
-                </p>
               </div>
             </div>
           </div>
@@ -527,135 +563,114 @@ export const WorldEditorialLayer: React.FC = () => {
       )}
 
       {/* =========================================================================
-          DESTINATION 07: CONTACT / SIGNAL BEACON
+          DESTINATION 07: CONTACT / GET IN TOUCH (CREATIVE STUDIO COLLABORATION)
           ========================================================================= */}
       {activeDestination === 'contact' && (
         <section className="editorial-view contact-view" aria-label="Contact Zone">
-          <div className="contact-panel">
-            <div className="contact-head-col">
-              <div className="zone-kicker-badge">
-                <span className="kicker-dot pulse-emerald" />
-                <span>ZONE 07 // OPEN TRANSMISSION</span>
-              </div>
+          <div className="contact-editorial-container">
+            <div className="contact-editorial-header">
+              <span className="editorial-kicker">07 // INQUIRIES &amp; COLLABORATION</span>
               <h2 className="editorial-section-title">
-                LET’S BUILD<br />
-                <span>SOMETHING RESILIENT.</span>
+                LET’S CONNECT.
               </h2>
-              <p className="contact-lead-copy">
-                Currently open to software engineering roles, blockchain development opportunities, and collaborative technical builds.
+              <p className="contact-editorial-lead">
+                Open for full-stack engineering roles, Web3 systems, and collaborative technical builds.
               </p>
+            </div>
 
-              {/* Status & Availability Info Box */}
-              <div className="contact-status-card">
-                <div className="status-indicator-line">
-                  <span className="live-pulse-emerald" />
-                  <strong>AVAILABLE FOR WORK</strong>
+            {/* Prominent Direct Email */}
+            <div className="contact-email-showcase">
+              <span className="contact-label-sub">DIRECT INBOX</span>
+              <div className="contact-email-line-wrap">
+                <a
+                  href="mailto:goswamiaaditya61@gmail.com"
+                  className="contact-display-email"
+                >
+                  goswamiaaditya61@gmail.com
+                </a>
+              </div>
+
+              {/* Minimalist Sub-Row: Copy Button + Location + Status */}
+              <div className="contact-detail-row">
+                <button
+                  type="button"
+                  className={`contact-copy-pill ${copiedEmail ? 'copied' : ''}`}
+                  onClick={handleCopyEmail}
+                >
+                  {copiedEmail ? (
+                    <>
+                      <Check size={13} />
+                      <span>COPIED ADDRESS</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={13} />
+                      <span>COPY EMAIL</span>
+                    </>
+                  )}
+                </button>
+
+                <div className="contact-detail-divider" />
+
+                <div className="contact-info-pill">
+                  <span className="info-dot dot-cyan" />
+                  <span>Vadodara, Gujarat, India</span>
                 </div>
-                <div className="status-meta-grid">
-                  <div>
-                    <span className="status-meta-label">BASE LOCATION</span>
-                    <span className="status-meta-val">Vadodara, India (IST / UTC +5:30)</span>
-                  </div>
-                  <div>
-                    <span className="status-meta-label">RESPONSE LATENCY</span>
-                    <span className="status-meta-val">&lt; 24 Hours</span>
-                  </div>
+
+                <div className="contact-detail-divider" />
+
+                <div className="contact-info-pill">
+                  <span className="info-dot dot-emerald" />
+                  <span>Open for opportunities</span>
                 </div>
               </div>
             </div>
 
-            <div className="contact-channels-col">
-              {/* Direct Email Card with 1-click Copy & Direct Send */}
-              <div className="contact-action-card">
-                <div className="channel-card-header">
-                  <div className="channel-icon-pill email">
-                    <Mail size={16} />
-                  </div>
-                  <div className="channel-text-group">
-                    <span className="channel-kicker">PRIMARY DIRECT INBOX</span>
-                    <h3 className="channel-address">goswamiaaditya61@gmail.com</h3>
-                  </div>
-                </div>
-                <div className="channel-card-actions">
-                  <button
-                    type="button"
-                    className={`channel-action-btn copy-btn ${copiedEmail ? 'copied' : ''}`}
-                    onClick={handleCopyEmail}
-                  >
-                    {copiedEmail ? (
-                      <>
-                        <Check size={14} />
-                        <span>COPIED TO CLIPBOARD!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy size={14} />
-                        <span>COPY EMAIL</span>
-                      </>
-                    )}
-                  </button>
-                  <a
-                    href="mailto:goswamiaaditya61@gmail.com"
-                    className="channel-action-btn send-btn"
-                  >
-                    <span>SEND MESSAGE</span>
-                    <ArrowUpRight size={14} />
-                  </a>
-                </div>
-              </div>
+            <div className="contact-hairline-sep" />
 
-              {/* GitHub Archive Card */}
+            {/* Social Links List (Open List, NOT Cards) */}
+            <div className="contact-channels-ledger">
               <a
                 href="https://github.com/Aaditya0411/"
                 target="_blank"
                 rel="noreferrer"
-                className="contact-social-card"
+                className="contact-channel-link"
               >
-                <div className="social-card-left">
-                  <div className="channel-icon-pill github">
-                    <Github size={16} />
-                  </div>
-                  <div>
-                    <span className="channel-kicker">SOURCE CODE ARCHIVE</span>
-                    <h3 className="social-handle">github.com/Aaditya0411</h3>
-                  </div>
+                <div className="channel-id">
+                  <Github size={16} />
+                  <span className="channel-name">GITHUB</span>
                 </div>
-                <div className="social-card-right">
-                  <span className="social-stat-pill">24+ REPOS</span>
-                  <ArrowUpRight size={16} className="social-arrow" />
-                </div>
+                <span className="channel-handle">github.com/Aaditya0411</span>
+                <span className="channel-cue">
+                  <ArrowUpRight size={14} />
+                </span>
               </a>
 
-              {/* LinkedIn Network Card */}
               <a
                 href="https://www.linkedin.com/in/adityagiri61/"
                 target="_blank"
                 rel="noreferrer"
-                className="contact-social-card"
+                className="contact-channel-link"
               >
-                <div className="social-card-left">
-                  <div className="channel-icon-pill linkedin">
-                    <Linkedin size={16} />
-                  </div>
-                  <div>
-                    <span className="channel-kicker">PROFESSIONAL NETWORK</span>
-                    <h3 className="social-handle">linkedin.com/in/adityagiri61</h3>
-                  </div>
+                <div className="channel-id">
+                  <Linkedin size={16} />
+                  <span className="channel-name">LINKEDIN</span>
                 </div>
-                <div className="social-card-right">
-                  <span className="social-stat-pill">INMAIL / CONNECT</span>
-                  <ArrowUpRight size={16} className="social-arrow" />
-                </div>
+                <span className="channel-handle">linkedin.com/in/adityagiri61</span>
+                <span className="channel-cue">
+                  <ArrowUpRight size={14} />
+                </span>
               </a>
+            </div>
 
-              {/* Return to Digital Estuary Button */}
+            <div className="contact-editorial-footer">
               <button
                 type="button"
-                className="contact-return-btn"
+                className="contact-return-link"
                 onClick={() => navigateTo('origin')}
               >
-                <ArrowDownRight size={15} />
-                <span>RETURN TO DIGITAL ESTUARY (HOME)</span>
+                <ArrowDownRight size={14} />
+                <span>BACK TO OVERVIEW</span>
               </button>
             </div>
           </div>

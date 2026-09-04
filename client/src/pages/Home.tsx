@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { WorldCanvas } from '@/components/world/WorldCanvas';
+import { CinematicFishermanIntro } from '@/components/world/CinematicFishermanIntro';
 import { WorldNavHUD } from '@/components/world/WorldNavHUD';
 import { WorldEditorialLayer } from '@/components/world/WorldEditorialLayer';
 import { ProjectCaseStudyDrawer } from '@/components/world/ProjectCaseStudyDrawer';
@@ -13,6 +14,7 @@ export default function Home() {
     navigateTo,
     activeCaseStudy,
     closeCaseStudy,
+    isOpeningActive,
   } = useWorld();
 
   // Spatial scroll and keyboard controller
@@ -20,8 +22,8 @@ export default function Home() {
     let lastWheelTime = 0;
 
     const onWheel = (e: WheelEvent) => {
-      // If a case study drawer is active, allow normal scrolling inside the drawer
-      if (activeCaseStudy) return;
+      // If intro is active or a case study drawer is open, ignore global scroll
+      if (activeCaseStudy || isOpeningActive) return;
 
       const now = Date.now();
       if (now - lastWheelTime < 650) return; // Smooth pacing between camera flights
@@ -42,7 +44,7 @@ export default function Home() {
     };
 
     const onTouchEnd = (e: TouchEvent) => {
-      if (activeCaseStudy) return;
+      if (activeCaseStudy || isOpeningActive) return;
       const touchEndY = e.changedTouches[0].clientY;
       const diff = touchStartY - touchEndY;
       if (Math.abs(diff) > 40) {
@@ -59,6 +61,7 @@ export default function Home() {
         if (e.key === 'Escape') closeCaseStudy();
         return;
       }
+      if (isOpeningActive) return;
 
       if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
         nextDestination();
@@ -80,10 +83,13 @@ export default function Home() {
       window.removeEventListener('touchend', onTouchEnd);
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [activeCaseStudy, nextDestination, prevDestination, navigateTo, closeCaseStudy]);
+  }, [activeCaseStudy, isOpeningActive, nextDestination, prevDestination, navigateTo, closeCaseStudy]);
 
   return (
     <div className="world-viewport-root">
+      {/* 0. Dedicated Cinematic Fisherman Opening Sequence (5-7s, Unmounts Post-Intro) */}
+      <CinematicFishermanIntro />
+
       {/* 1. Fullscreen Unified 3D World Canvas */}
       <WorldCanvas />
 

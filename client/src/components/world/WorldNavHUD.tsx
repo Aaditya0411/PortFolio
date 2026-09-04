@@ -1,10 +1,10 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, RotateCcw } from 'lucide-react';
 import { useWorld, DESTINATIONS, DestinationId } from '@/contexts/WorldStateContext';
 import { GoswamiMonogram } from '@/components/brand/GoswamiMonogram';
 
 export const WorldNavHUD: React.FC = () => {
-  const { activeDestination, navigateTo } = useWorld();
+  const { activeDestination, navigateTo, replayOpening } = useWorld();
 
   return (
     <nav className="world-hud-layer" aria-label="Portfolio Navigation">
@@ -54,8 +54,21 @@ export const WorldNavHUD: React.FC = () => {
       {/* Bottom Subtle Status & Scroll Hint */}
       <footer className="world-bottom-hud">
         <div className="world-coords">
-          <span className="eyebrow-dot" />
-          <span>ZONE 01 // CORE</span>
+          <button
+            type="button"
+            className="world-replay-trigger"
+            onClick={replayOpening}
+            title="Replay cinematic prologue"
+            aria-label="Replay intro sequence"
+          >
+            <RotateCcw size={10} />
+            <span>REPLAY INTRO</span>
+          </button>
+          <span className="coord-dot">·</span>
+          <span>{(() => {
+            const dest = DESTINATIONS.find((d) => d.id === activeDestination);
+            return dest ? `ZONE ${dest.index} // ${dest.label}` : 'ZONE 01 // ORIGIN / CORE';
+          })()}</span>
           <span className="coord-dot">·</span>
           <span>THE DIGITAL ESTUARY</span>
           <span className="coord-dot">·</span>

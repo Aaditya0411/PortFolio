@@ -100,7 +100,7 @@ interface WorldStateContextType {
 
 const WorldStateContext = createContext<WorldStateContextType | null>(null);
 
-const SESSION_KEY = 'aditya_world_seen_v1';
+const SESSION_KEY = 'aditya_cinematic_intro_v2';
 
 export const WorldStateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeDestination, setActiveDestination] = useState<DestinationId>('origin');
