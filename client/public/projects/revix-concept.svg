@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0c10"/>
+      <stop offset="100%" stop-color="#141720"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff5544"/>
+      <stop offset="100%" stop-color="#d63b2f"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1c202a" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg1)"/>
+  <rect width="800" height="500" fill="url(#grid)" opacity="0.7"/>
+
+  <!-- Top Metadata Bar -->
+  <rect x="40" y="32" width="720" height="36" fill="#12151d" rx="4" stroke="#222734" stroke-width="1"/>
+  <circle cx="60" cy="50" r="4" fill="#d6483e"/>
+  <text x="76" y="54" fill="#8d95a5" font-family="monospace" font-size="11" letter-spacing="2">REVIX // APPLICATION-LEVEL VERSION CONTROL ENGINE</text>
+  <text x="680" y="54" fill="#d6483e" font-family="monospace" font-size="11" text-anchor="end">SYS_ID: 01-VCS</text>
+
+  <!-- Central Commit DAG / Version Tree -->
+  <!-- Main Trunk Line -->
+  <line x1="120" y1="260" x2="680" y2="260" stroke="#363c4c" stroke-width="3" stroke-dasharray="6,6"/>
+  
+  <!-- Branch 1 (Feature Branch Arc) -->
+  <path d="M 220 260 C 260 260, 270 170, 340 170 L 460 170 C 520 170, 540 260, 580 260" fill="none" stroke="#d6483e" stroke-width="2.5"/>
+
+  <!-- Branch 2 (Hotfix Arc) -->
+  <path d="M 380 260 C 410 260, 420 340, 470 340 L 520 340 C 550 340, 560 260, 590 260" fill="none" stroke="#e0e6ed" stroke-width="2"/>
+
+  <!-- Commit Nodes -->
+  <!-- Commit 1 -->
+  <circle cx="150" cy="260" r="14" fill="#181c26" stroke="#485062" stroke-width="2.5"/>
+  <text x="150" y="264" fill="#8d95a5" font-family="monospace" font-size="9" text-anchor="middle">c1</text>
+  <text x="150" y="295" fill="#656c7d" font-family="monospace" font-size="10" text-anchor="middle">init</text>
+
+  <!-- Commit 2 (Branch point) -->
+  <circle cx="220" cy="260" r="14" fill="#181c26" stroke="#d6483e" stroke-width="2.5"/>
+  <text x="220" y="264" fill="#f0ece1" font-family="monospace" font-size="9" text-anchor="middle">c2</text>
+  <text x="220" y="295" fill="#d6483e" font-family="monospace" font-size="10" text-anchor="middle">tree/v1</text>
+
+  <!-- Commit 3 (Feature node 1) -->
+  <circle cx="340" cy="170" r="14" fill="#181c26" stroke="#d6483e" stroke-width="2.5"/>
+  <circle cx="340" cy="170" r="5" fill="#d6483e"/>
+  <text x="340" y="145" fill="#f0ece1" font-family="monospace" font-size="10" text-anchor="middle">track-idx</text>
+
+  <!-- Commit 4 (Feature node 2) -->
+  <circle cx="460" cy="170" r="14" fill="#181c26" stroke="#d6483e" stroke-width="2.5"/>
+  <text x="460" y="174" fill="#f0ece1" font-family="monospace" font-size="9" text-anchor="middle">c4</text>
+  <text x="460" y="145" fill="#d6483e" font-family="monospace" font-size="10" text-anchor="middle">diff-algo</text>
+
+  <!-- Commit 5 (Main intermediate) -->
+  <circle cx="380" cy="260" r="14" fill="#181c26" stroke="#485062" stroke-width="2.5"/>
+  <text x="380" y="264" fill="#8d95a5" font-family="monospace" font-size="9" text-anchor="middle">c3</text>
+
+  <!-- Commit 6 (Hotfix node) -->
+  <circle cx="470" cy="340" r="12" fill="#181c26" stroke="#e0e6ed" stroke-width="2"/>
+  <text x="470" y="370" fill="#a0a8b7" font-family="monospace" font-size="10" text-anchor="middle">jwt-patch</text>
+
+  <!-- Merge Commit (Feature Merge) -->
+  <circle cx="580" cy="260" r="16" fill="url(#redGrad)" stroke="#f0ece1" stroke-width="2"/>
+  <circle cx="580" cy="260" r="6" fill="#ffffff"/>
+  <text x="580" y="298" fill="#f0ece1" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">HEAD/MERGE</text>
+
+  <!-- Final Commit -->
+  <circle cx="650" cy="260" r="13" fill="#181c26" stroke="#485062" stroke-width="2"/>
+  <text x="650" y="264" fill="#8d95a5" font-family="monospace" font-size="9" text-anchor="middle">v1.2</text>
+
+  <!-- Code / Diff Terminal Card (Bottom Left) -->
+  <rect x="40" y="380" width="360" height="90" fill="#0e1118" rx="6" stroke="#252a38" stroke-width="1.5"/>
+  <text x="56" y="405" fill="#8d95a5" font-family="monospace" font-size="11">$ revix commit -m &quot;feat: custom vcs module&quot;</text>
+  <text x="56" y="425" fill="#3dd68c" font-family="monospace" font-size="10">+ 14 files tracked, 1,842 lines committed</text>
+  <text x="56" y="445" fill="#d6483e" font-family="monospace" font-size="10">hash: 9a7e2b1f8d · tree: blob/67f4c · refs/heads/main</text>
+
+  <!-- Technical Spec Badge (Bottom Right) -->
+  <rect x="440" y="380" width="320" height="90" fill="#0e1118" rx="6" stroke="#252a38" stroke-width="1.5"/>
+  <text x="458" y="405" fill="#8d95a5" font-family="monospace" font-size="10" letter-spacing="1">STACK ARCHITECTURE</text>
+  <text x="458" y="425" fill="#f0ece1" font-family="monospace" font-size="12" font-weight="bold">React + Node.js + Express + MongoDB</text>
+  <text x="458" y="448" fill="#8d95a5" font-family="monospace" font-size="10">JWT Authentication · bcryptjs · Custom VCS Engine</text>
+</svg>

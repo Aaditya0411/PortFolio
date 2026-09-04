@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0c10"/>
+      <stop offset="100%" stop-color="#161822"/>
+    </linearGradient>
+    <pattern id="grid4" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1d2230" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg4)"/>
+  <rect width="800" height="500" fill="url(#grid4)" opacity="0.65"/>
+
+  <!-- Top Metadata Bar -->
+  <rect x="40" y="32" width="720" height="36" fill="#12151d" rx="4" stroke="#222734" stroke-width="1"/>
+  <circle cx="60" cy="50" r="4" fill="#d6483e"/>
+  <text x="76" y="54" fill="#8d95a5" font-family="monospace" font-size="11" letter-spacing="2">ETHEREUM // DECENTRALIZED LOTTERY SMART CONTRACT</text>
+  <text x="680" y="54" fill="#d6483e" font-family="monospace" font-size="11" text-anchor="end">SYS_ID: 04-ETH</text>
+
+  <!-- Central Ethereum Diamond & Transaction Matrix -->
+  <g transform="translate(400, 230)">
+    <!-- Ethereum Diamond Top Pyramid -->
+    <polygon points="0,-120 70,-20 0,20 -70,-20" fill="#1c202d" stroke="#d6483e" stroke-width="2.5"/>
+    <polygon points="0,-120 70,-20 0,0" fill="#252b3c" stroke="#d6483e" stroke-width="2"/>
+    
+    <!-- Ethereum Diamond Bottom Pyramid -->
+    <polygon points="0,35 70,-5 0,105 -70,-5" fill="#181b26" stroke="#48536e" stroke-width="2"/>
+    <polygon points="0,35 70,-5 0,105" fill="#1c202d" stroke="#48536e" stroke-width="1.5"/>
+
+    <!-- Orbiting Participant Ring -->
+    <ellipse cx="0" cy="10" rx="170" ry="60" fill="none" stroke="#d6483e" stroke-width="1.5" stroke-dasharray="6,4"/>
+    
+    <!-- Participant Nodes -->
+    <circle cx="-160" cy="15" r="10" fill="#161a24" stroke="#e0e6ed" stroke-width="2"/>
+    <text x="-160" y="38" fill="#8d95a5" font-family="monospace" font-size="8" text-anchor="middle">0x7a...92</text>
+
+    <circle cx="160" cy="5" r="10" fill="#161a24" stroke="#e0e6ed" stroke-width="2"/>
+    <text x="160" y="28" fill="#8d95a5" font-family="monospace" font-size="8" text-anchor="middle">0x3f...11</text>
+
+    <circle cx="60" cy="65" r="10" fill="#161a24" stroke="#e0e6ed" stroke-width="2"/>
+    <text x="60" y="88" fill="#8d95a5" font-family="monospace" font-size="8" text-anchor="middle">0xb4...e8</text>
+
+    <!-- Prize Pool Core Badge -->
+    <rect x="-65" y="-10" width="130" height="30" rx="4" fill="#0d1017" stroke="#d6483e" stroke-width="2"/>
+    <text x="0" y="10" fill="#f0ece1" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">POOL: 3.0 ETH</text>
+  </g>
+
+  <!-- Contract Rules Info (Bottom Left) -->
+  <rect x="40" y="380" width="340" height="90" fill="#0e1118" rx="6" stroke="#252a38" stroke-width="1.5"/>
+  <text x="56" y="405" fill="#8d95a5" font-family="monospace" font-size="10" letter-spacing="1">SOLIDITY SMART CONTRACT RULES</text>
+  <text x="56" y="425" fill="#f0ece1" font-family="monospace" font-size="11">require(msg.value == 1 ether);</text>
+  <text x="56" y="445" fill="#d6483e" font-family="monospace" font-size="10">Minimum 3 Participants · Manager-Triggered Draw</text>
+
+  <!-- Contract Architecture Info (Bottom Right) -->
+  <rect x="420" y="380" width="340" height="90" fill="#0e1118" rx="6" stroke="#252a38" stroke-width="1.5"/>
+  <text x="438" y="405" fill="#8d95a5" font-family="monospace" font-size="10" letter-spacing="1">EVM / SOLIDITY EXECUTION</text>
+  <text x="438" y="425" fill="#f0ece1" font-family="monospace" font-size="12" font-weight="bold">Payable Functions + Access Control</text>
+  <text x="438" y="448" fill="#8d95a5" font-family="monospace" font-size="10">Remix IDE Deployment · Immutable State Machine</text>
+</svg>
